@@ -64,6 +64,7 @@ int main() {
 
     // set up USER pin as input
     ANSELBbits.ANSB13 = 0;
+    ANSELBbits.ANSB15 = 0;
     TRISBbits.TRISB13=1;
 
     // set up LED1 pin as a digital output
@@ -77,12 +78,12 @@ int main() {
 
     // set up LED2 as OC1 using Timer2 at 1kHz
     
-    T2CONbits.TCKPS = 2;
+    T2CONbits.TCKPS = 0;
     T2CONbits.TCS = 0;
-    PR2 = 19999;
+    PR2 = 9999;
     TMR2 = 0;
 
-    OC1CONbits.OCTSEL = 1;
+    OC1CONbits.OCTSEL = 0;
     OC1CONbits.OCM = 0b110;
     OC1RS = 5000;
     OC1R = 5000;
@@ -102,7 +103,7 @@ int main() {
     while (1) {
         // invert pin every 0.5s, set PWM duty cycle % to the pot voltage output %
         int pot = readADC();
-        OC1RS = 5000;
+        OC1RS = pot*35;
 
         if(PORTBbits.RB13 == 0)
         {
