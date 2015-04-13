@@ -153,14 +153,11 @@ static const char ASCII[96][5] = {
 
 
 
-
-
 int readADC(void);
 
 int main() {
 
     // startup
-    display_init();
 
 
     __builtin_disable_interrupts();
@@ -221,6 +218,7 @@ int main() {
 
     _CP0_SET_COUNT(0);
 
+    display_init();
     int number = 1337;
     sprintf(buffer,"Hello World %d!", number);
 
@@ -265,5 +263,35 @@ int readADC(void) {
 }
 
 void write_to_display(int xstart, int ystart, char text[]){
-    ;
+    int i = 0;
+    int ascii_byte;
+    int j;
+    int k;
+    int x;
+    int y;
+
+    x = xstart;
+    y = ystart;
+
+    while(text[i]){
+        for (j = 0; j<5; j++){
+           ascii_byte = ASCII[text[i]-0x20][j];
+           k=0;
+           for(k=0;k<8;k++){
+               if(x <129 && y<64){
+                    display_pixel_set(y,x,ascii_byte&1);
+                    ascii_byte = ascii_byte>>1;
+               }
+               y++;
+               if (k == 7){
+                    y=ystart;
+               }
+               
+           }
+           x++;
+        }
+        i++;
+    }
+
+    display_draw();
 }
