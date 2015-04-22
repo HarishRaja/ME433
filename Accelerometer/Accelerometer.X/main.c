@@ -242,7 +242,7 @@ int main() {
             LATBbits.LATB7 = !LATBbits.LATB7;
         }
 
-        if(_CP0_GET_COUNT()>=1000000)
+        else if(_CP0_GET_COUNT()>=1000000)
         {
             light = !light;
             LATBbits.LATB7 = light;
