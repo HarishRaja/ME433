@@ -66,7 +66,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 char buffer[63];
 int i;
 int j=0;
-short accels[3]; // accelerations for the 3 axes
+char accels[6]; // accelerations for the 3 axes
 FILE *ofp;
 
 static const char ASCII[96][5] = {
@@ -507,12 +507,12 @@ void APP_Tasks (void )
                                 if(_CP0_GET_COUNT()>200000){
                                     acc_read_register(OUT_X_L_A, (unsigned char *) accels, 6);
                                     appData.transmitDataBuffer[1]=1;
-                                    appData.transmitDataBuffer[2]=(accels[0] & 11110000)>>4;
-                                    appData.transmitDataBuffer[3]=accels[0] & 1111;
-                                    appData.transmitDataBuffer[4]=(accels[1] & 11110000)>>4;
-                                    appData.transmitDataBuffer[5]=accels[1] & 1111;
-                                    appData.transmitDataBuffer[6]=(accels[2] & 11110000)>>4;
-                                    appData.transmitDataBuffer[7]=accels[2] & 1111;
+                                    appData.transmitDataBuffer[2]=accels[0];
+                                    appData.transmitDataBuffer[3]=accels[1];
+                                    appData.transmitDataBuffer[4]=accels[2];
+                                    appData.transmitDataBuffer[5]=accels[3];
+                                    appData.transmitDataBuffer[6]=accels[4];
+                                    appData.transmitDataBuffer[7]=accels[5];
 
                                     _CP0_SET_COUNT(0);
                                 }

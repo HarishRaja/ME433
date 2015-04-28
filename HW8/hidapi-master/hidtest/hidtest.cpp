@@ -74,9 +74,9 @@ int main(int argc, char* argv[])
         
         if (buf[1]==1) {
             // Print out the returned buffer.
-                acx = buf[2]*8+buf[3];
-                acy = buf[4]*8+buf[5];
-                acz = buf[6]*8+buf[7];
+                acx = ~(buf[2] | buf[3]<<8)+1;
+                acy = ~(buf[4] | buf[5]<<8)+1;
+                acz = ~(buf[6] | buf[7]<<8)+1;
                 
                 fprintf(ofp,"%d %d %d\r\n",acx,acy,acz);
 
